@@ -522,6 +522,21 @@ proc main() =
 
         of XK_f:
           flashlight.isEnabled = not flashlight.isEnabled
+        of XK_K, XK_UP:
+          if (xev.xkey.state and ShiftMask) > 0.uint32:
+            scrollUp()
+          else:
+            # TODO: use a config value for the speed
+            camera.velocity.y = -10.0 * rate.float
+        of XK_J, XK_DOWN:
+          if (xev.xkey.state and ShiftMask) > 0.uint32:
+            scrollDown()
+          else:
+            camera.velocity.y = 10.0 * rate.float
+        of XK_H, XK_LEFT:
+          camera.velocity.x = -10.0 * rate.float
+        of XK_L, XK_RIGHT:
+          camera.velocity.x = 10.0 * rate.float
         else:
           discard
 
