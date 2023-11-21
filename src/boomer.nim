@@ -282,10 +282,11 @@ proc main() =
   when defined(select):
     echo "Please select window:"
     var trackingWindow = selectWindow(display)
-  when defined(focused):
-    var trackingWindow = selectFocusedWindow(display) 
   else:
-    var trackingWindow = DefaultRootWindow(display)
+    when defined(focused):
+      var trackingWindow = selectFocusedWindow(display) 
+    else:
+      var trackingWindow = DefaultRootWindow(display)
 
   var screenConfig = XRRGetScreenInfo(display, DefaultRootWindow(display))
   let rate = XRRConfigCurrentRate(screenConfig)
