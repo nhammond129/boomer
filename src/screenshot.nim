@@ -42,7 +42,7 @@ proc newScreenshot*(display: PDisplay, window: Window): Screenshot =
 
   when defined(mitshm):
     result.shminfo = cast[PXShmSegmentInfo](
-      allocShared(sizeof(TXShmSegmentInfo)))
+      allocShared(sizeof(PXShmSegmentInfo)))
     let screen = DefaultScreen(display)
     result.image = XShmCreateImage(
       display,
