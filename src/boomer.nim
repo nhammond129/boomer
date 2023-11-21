@@ -168,6 +168,12 @@ proc selectWindow(display: PDisplay): Window =
 
   return root
 
+proc selectFocusedWindow(display: PDisplay): Window =
+  var focusedWindow = Window(0)
+  var revertTo: cint
+  discard XGetInputFocus(display, addr focusedWindow, addr revertTo)
+  return focusedWindow
+
 proc xElevenErrorHandler(display: PDisplay, errorEvent: PXErrorEvent): cint{.cdecl.} =
   const CAPACITY = 256
   var errorMessage: array[CAPACITY, char]
@@ -276,6 +282,8 @@ proc main() =
   when defined(select):
     echo "Please select window:"
     var trackingWindow = selectWindow(display)
+  when defined(focused):
+    var trackingWindow = selectFocusedWindow(display) 
   else:
     var trackingWindow = DefaultRootWindow(display)
 
