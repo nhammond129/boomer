@@ -11,13 +11,13 @@ when defined(mitshm):
       SHMCTL = 31
       SHMDT = 67
 
-    proc syscall*(n: Number, a1: any): clong {.inline.} =
+    proc syscall*(n: Number, a1: auto): clong {.inline.} =
       {.emit: """asm volatile(
         "syscall" : "=a"(`result`)
                   : "a"((long)`n`), "D"((long)`a1`)
                   : "memory", "r11", "rcx", "cc");""".}
 
-    proc syscall*(n: Number, a1, a2, a3: any): clong {.inline.} =
+    proc syscall*(n: Number, a1, a2, a3: auto): clong {.inline.} =
       {.emit: """asm volatile(
         "syscall" : "=a"(`result`)
                   : "a"((long)`n`), "D"((long)`a1`), "S"((long)`a2`),
